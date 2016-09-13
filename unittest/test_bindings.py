@@ -25,6 +25,7 @@ class DefaultPasswords(Enum):
 
 class DeviceErrorCode(Enum):
     STATUS_OK = 0
+    WRONG_SLOT = 2
     NOT_PROGRAMMED = 3
     WRONG_PASSWORD = 4
     STATUS_NOT_AUTHORIZED = 5
@@ -233,6 +234,39 @@ def test_invalid_slot(C):
     assert C.NK_get_last_command_status() == LibraryErrors.INVALID_SLOT
     assert gs(C.NK_get_password_safe_slot_login(invalid_slot)) == ''
     assert C.NK_get_last_command_status() == LibraryErrors.INVALID_SLOT
+
+
+def test_invalid_slot_number_boundary(C):
+    # boundary conditions test
+    hotp_slot_count = 3
+    totp_slot_count = 15
+    use_pin_protection = False
+    use_8_digits = False
+
+    def check_range(func, slot_count):
+        for i in range(0, 10):
+            print((i, '='*20))
+            assert C.NK_first_authenticate(DefaultPasswords.ADMIN,
+                                           DefaultPasswords.ADMIN_TEMP) == DeviceErrorCode.STATUS_OK
+            assert C.NK_write_config(255, 255, 255, use_pin_protection, not use_pin_protection,
+                                     DefaultPasswords.ADMIN_TEMP) == DeviceErrorCode.STATUS_OK
+            assert C.NK_first_authenticate(DefaultPasswords.ADMIN,
+                                           DefaultPasswords.ADMIN_TEMP) == DeviceErrorCode.STATUS_OK
+            write_hotp_slot = C.NK_write_hotp_slot(i, 'python_test', RFC_SECRET, 0, use_8_digits, False, False, "",
+                                        DefaultPasswords.ADMIN_TEMP)
+
+            r = func(i)
+            if 0 <= i < slot_count:
+                assert write_hotp_slot == DeviceErrorCode.STATUS_OK
+                assert C.NK_get_last_command_status() != DeviceErrorCode.WRONG_SLOT
+                assert r != 0
+            else:
+                assert write_hotp_slot == DeviceErrorCode.WRONG_SLOT
+                assert C.NK_get_last_command_status() == DeviceErrorCode.WRONG_SLOT
+                assert r == 0
+
+    check_range(lambda i: C.NK_get_hotp_code(i), hotp_slot_count)
+    # check_range(lambda i: C.NK_get_totp_code(i, 0, 0, 0), totp_slot_count)
 
 
 def test_admin_retry_counts(C):
