@@ -29,7 +29,7 @@ set(SOURCE_FILES
     misc.cc
     NitrokeyManager.cc
         NK_C_API.cc include/CommandFailedException.h include/LibraryException.h
-        unittest/test_C_API.cpp
-        unittest/catch_main.cpp)
+        unittest/test_C_API.cc
+        unittest/catch_main.cc)
 
 add_executable(libnitrokey ${SOURCE_FILES})
