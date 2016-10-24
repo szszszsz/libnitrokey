@@ -27,6 +27,7 @@ void execute_password_command(Device &stick, const char *password, const char ki
   }
   strcpyT(p.password, password);
   CMDTYPE::CommandTransaction::run(stick, p);
+  this_thread::sleep_for(1000ms);
 }
 
 
@@ -42,18 +43,26 @@ TEST_CASE("test", "[test]") {
 //  execute_password_command<DisableEncryptedPartition>(stick, "123456");
   this_thread::sleep_for(1000ms);
   execute_password_command<EnableEncryptedPartition>(stick, "123456");
-  this_thread::sleep_for(1000ms);
-  this_thread::sleep_for(1000ms);
-  this_thread::sleep_for(1000ms);
-  this_thread::sleep_for(1000ms);
-  execute_password_command<EnableHiddenEncryptedPartition>(stick, "123123123");
-  this_thread::sleep_for(1000ms);
+  this_thread::sleep_for(4000ms);
+  bool passed = false;
+  for(int i=0; i<5; i++){
+    try {
+      execute_password_command<EnableHiddenEncryptedPartition>(stick, "123123123");
+      CHECK(true);
+      passed=true;
+      break;
+    }
+    catch (CommandFailedException &e){
+      this_thread::sleep_for(2000ms);
+    }
+  }
+  if(!passed){
+    CHECK(false);
+  }
+
   execute_password_command<DisableHiddenEncryptedPartition>(stick, "123123123");
-  this_thread::sleep_for(1000ms);
   execute_password_command<SendSetReadonlyToUncryptedVolume>(stick, "123456");
-  this_thread::sleep_for(1000ms);
   execute_password_command<SendSetReadwriteToUncryptedVolume>(stick, "123456");
-  this_thread::sleep_for(1000ms);
   execute_password_command<SendClearNewSdCardFound>(stick, "12345678", 'A');
   this_thread::sleep_for(1000ms);
 //  execute_password_command<LockFirmware>(stick, "123123123"); //CAUTION
