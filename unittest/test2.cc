@@ -40,7 +40,11 @@ TEST_CASE("test", "[test]") {
   stick10::LockDevice::CommandTransaction::run(stick);
 //  execute_password_command<EnableEncryptedPartition>(stick, "123456");
 //  execute_password_command<DisableEncryptedPartition>(stick, "123456");
+  this_thread::sleep_for(1000ms);
   execute_password_command<EnableEncryptedPartition>(stick, "123456");
+  this_thread::sleep_for(1000ms);
+  this_thread::sleep_for(1000ms);
+  this_thread::sleep_for(1000ms);
   this_thread::sleep_for(1000ms);
   execute_password_command<EnableHiddenEncryptedPartition>(stick, "123123123");
   this_thread::sleep_for(1000ms);
