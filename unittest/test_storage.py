@@ -26,8 +26,7 @@ def test_get_status_storage(C):
     status_string = gs(status_pointer)
     status_dict = get_dict_from_dissect(status_string)
     default_admin_password_retry_count = 3
-    assert status_dict['AdminPwRetryCount'] == default_admin_password_retry_count
-    pprint (status_dict)
+    assert int(status_dict['AdminPwRetryCount']) == default_admin_password_retry_count
 
 
 def test_sd_card_usage(C):
@@ -55,19 +54,13 @@ def test_encrypted_volume_setup_multiple_hidden(C):
     hidden_volume_password = 'hiddenpassword'
     p = lambda i: hidden_volume_password + str(i)
     assert C.NK_lock_device() == DeviceErrorCode.STATUS_OK
-    wait(2)
     assert C.NK_unlock_encrypted_volume(DefaultPasswords.USER) == DeviceErrorCode.STATUS_OK
-    wait(2)
     for i in range(4):
-        assert C.NK_create_hidden_volume(i, 20+i*10, 20+i*10+i, p(i) ) == DeviceErrorCode.STATUS_OK
-        wait(2)
+        assert C.NK_create_hidden_volume(i, 20+i*10, 20+i*10+i+1, p(i) ) == DeviceErrorCode.STATUS_OK
     for i in range(4):
-        assert C.NK_unlock_hidden_volume(p(i)) == DeviceErrorCode.STATUS_OK
-        wait(4)
         assert C.NK_lock_device() == DeviceErrorCode.STATUS_OK
-        wait(2)
         assert C.NK_unlock_encrypted_volume(DefaultPasswords.USER) == DeviceErrorCode.STATUS_OK
-        wait(4)
+        assert C.NK_unlock_hidden_volume(p(i)) == DeviceErrorCode.STATUS_OK
 
 
 def test_unencrypted_volume_set_read_only(C):
@@ -94,6 +87,8 @@ def test_fill_SD_card(C):
 
 
 def test_change_update_password(C):
+    wrong_password = 'aaaaaaaaaaa'
+    assert C.NK_change_update_password(wrong_password, DefaultPasswords.UPDATE_TEMP) == DeviceErrorCode.WRONG_PASSWORD
     assert C.NK_change_update_password(DefaultPasswords.UPDATE, DefaultPasswords.UPDATE_TEMP) == DeviceErrorCode.STATUS_OK
     assert C.NK_change_update_password(DefaultPasswords.UPDATE_TEMP, DefaultPasswords.UPDATE) == DeviceErrorCode.STATUS_OK
 
