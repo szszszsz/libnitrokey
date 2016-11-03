@@ -324,10 +324,15 @@ extern int NK_erase_password_safe_slot(uint8_t slot_number);
  */
 extern int NK_is_AES_supported(const char *user_password);
 
+
+
+
+
 /**
- * The sendstartup command is typically run to initiate
- * communication with the device. It sets time on device and
- * returns its current status - a combination of set_time and get_status_storage commands
+ * This command is typically run to initiate
+ * communication with the device (altough not required).
+ * It sets time on device and returns its current status
+ * - a combination of set_time and get_status_storage commands
  * @param seconds_from_epoch date and time expressed in seconds
  */
 extern int NK_send_startup(uint64_t seconds_from_epoch);
