@@ -327,7 +327,7 @@ extern int NK_is_AES_supported(const char *user_password);
 /**
  * The sendstartup command is typically run to initiate
  * communication with the device. It sets time on device and
- * returns its current status.
+ * returns its current status - a combination of set_time and get_status_storage commands
  * @param seconds_from_epoch date and time expressed in seconds
  */
 extern int NK_send_startup(uint64_t seconds_from_epoch);
@@ -424,7 +424,7 @@ extern int NK_change_update_password(const char* current_update_password,
  * Storage only
  * @return string with devices attributes
  */
-extern const char* NK_get_status_storage();
+extern const char* NK_get_status_storage_as_string();
 
 /**
  * Get SD card usage attributes as string.
@@ -432,7 +432,7 @@ extern const char* NK_get_status_storage();
  * Storage only
  * @return string with SD card usage attributes
  */
-extern const char* NK_get_SD_usage_data();
+extern const char* NK_get_SD_usage_data_as_string();
 
 /**
  * Get progress value of current long operation.
