@@ -173,7 +173,7 @@ TEST_CASE("authorize user TOTP", "[pronew]") {
 
   auto p_get_totp = get_payload<GetTOTP>();
   p_get_totp.slot_number = 0 + 0x20;
-//  p_get_totp.last_interval = 30;
+
   REQUIRE_THROWS(
       GetTOTP::CommandTransaction::run(stick, p_get_totp);
   );
