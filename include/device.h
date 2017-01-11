@@ -33,7 +33,7 @@ enum class DeviceModel{
 class Device {
 
 public:
-    Device(const uint16_t pid, const uint16_t vid, const DeviceModel model,
+    Device(const uint16_t vid, const uint16_t pid, const DeviceModel model,
                    const milliseconds send_receive_delay, const int retry_receiving_count,
                    const milliseconds retry_timeout);
 

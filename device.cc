@@ -14,7 +14,7 @@ using namespace nitrokey::device;
 using namespace nitrokey::log;
 using namespace std::chrono;
 
-Device::Device(const uint16_t pid, const uint16_t vid, const DeviceModel model,
+Device::Device(const uint16_t vid, const uint16_t pid, const DeviceModel model,
                const milliseconds send_receive_delay, const int retry_receiving_count,
                const milliseconds retry_timeout)
     : m_vid(vid),
