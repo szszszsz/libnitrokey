@@ -105,7 +105,7 @@ namespace nitrokey{
 
     void NitrokeyManager::set_debug(bool state) {
         if (state){
-            Log::instance().set_loglevel(Loglevel::DEBUG);
+            Log::instance().set_loglevel(Loglevel::DEBUG_L2);
         } else {
             Log::instance().set_loglevel(Loglevel::ERROR);
         }
