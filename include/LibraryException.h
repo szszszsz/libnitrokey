@@ -37,6 +37,8 @@ public:
 
 };
 
+#include <sstream>
+#include <string>
 class InvalidHexString : public LibraryException {
 public:
     virtual uint8_t exception_id() override {
@@ -44,12 +46,18 @@ public:
     }
 
 public:
-    uint8_t invalid_char;
+    char invalid_char;
 
-    InvalidHexString (uint8_t invalid_char) : invalid_char( invalid_char) {}
+    InvalidHexString(char invalid_char, const int pos = 0) : invalid_char(invalid_char) {
+      std::stringstream ss;
+      ss << std::string("InvalidHexString, char: ") << std::to_string(invalid_char) << " [" << invalid_char << "], pos: " <<
+            std::to_string(pos);
+
+      nitrokey::log::Log::instance()(ss.str(), nitrokey::log::Loglevel::DEBUG);
+    }
 
     virtual const char *what() const throw() override {
-        return "Invalid character in hex string";
+      return "Invalid character in hex string";
     }
 
 };
