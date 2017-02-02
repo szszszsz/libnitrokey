@@ -135,5 +135,5 @@ Stick10::Stick10():
 
 
 Stick20::Stick20():
-  Device(0x20a0, 0x4109, DeviceModel::STORAGE, 100ms, 10, 100ms)
+  Device(0x20a0, 0x4109, DeviceModel::STORAGE, 200ms, 10, 200ms)
   {}
