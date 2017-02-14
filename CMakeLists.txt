@@ -65,8 +65,13 @@ set(SOURCE_FILES
 #	add_library(hidapi-libusb STATIC hidapi/libusb/hid.c )
 #ELSE()
 	include_directories(hidapi/hidapi)
-	add_library(hidapi-libusb SHARED hidapi/windows/hid.c )
-	target_link_libraries(hidapi-libusb setupapi setupapi kernel32 user32 gdi32 winspool comdlg32 advapi32 shell32 ole32 oleaut32 uuid odbc32 odbccp32)
+	add_library(hidapi-libusb STATIC hidapi/windows/hid.c )
+	target_link_libraries(hidapi-libusb setupapi
+            pcre16 png16 z harfbuzz
+            kernel32 user32 gdi32 winspool comdlg32 advapi32 shell32 ole32 oleaut32 uuid odbc32 odbccp32
+            gdi32 comdlg32 oleaut32 imm32 opengl32 png16 harfbuzz ole32 uuid ws2_32 advapi32 shell32 user32 kernel32 mpr winmm z pcre16 shell32 uxtheme dwmapi
+    )
+
 #ENDIF()
 
 IF (NOT LIBNITROKEY_STATIC)
