@@ -17,8 +17,8 @@ public:
 //  virtual const char* what() const throw() override {
 //    return message.c_str();
 //  }
-  bool has_occurred(){ return occurred > 0; };
-  void reset_occurred_flag(){ occurred = 0; };
+  static bool has_occurred(){ return occurred > 0; };
+  static void reset_occurred_flag(){ occurred = 0; };
 };
 
 class DeviceNotConnected: public DeviceCommunicationException {
