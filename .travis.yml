@@ -1,7 +1,7 @@
 language: generic
 sudo: false
 os: osx
-env: CF=not_used
+env: CF=
 
 matrix:
   include:
@@ -51,9 +51,8 @@ install:
 #  - export CXXFLAGS="${CXX_FLAGS} -Wall -Wextra -Werror" # TODO enable when fixed
   - ${CXX} --version || true
   - cmake --version
-  - cmake ..
+  - cmake .. ${CF}
 
 script:
-  - cmake . ${CF}
   - make -j2
 #  - make test # TODO add library device-less tests
