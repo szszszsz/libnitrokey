@@ -41,5 +41,5 @@ matrix:
 script:
   - cmake --version
   - ${CXX} --version || true
-  - cmake .
+  - cmake . -DCOMPILE_TESTS=ON
   - make -j2
