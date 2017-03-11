@@ -2,19 +2,29 @@ language: generic
 #os: osx
 matrix:
   include:
-#    - os: linux
-#      dist: trusty
-#      sudo: false
-#      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5
-#      addons:
-#        apt:
-#          packages:
-#            - g++-5
-#            - cmake
-#          sources: &sources
-#            - llvm-toolchain-precise-3.8
-#            - ubuntu-toolchain-r-test
-#            - george-edison55/cmake-3.x
+    - os: linux
+      dist: trusty
+      sudo: false
+      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5
+      addons:
+        apt:
+          packages:
+            - cmake
+            - g++-5
+          sources: &sources
+            - llvm-toolchain-trusty-3.8
+            - ubuntu-toolchain-r-test
+            - george-edison55/cmake-3.x
+    - os: linux
+      dist: trusty
+      sudo: false
+      env: COMPILER_NAME=gcc CXX=g++-6 CC=gcc-6
+      addons:
+        apt:
+          packages:
+            - cmake
+            - g++-6
+          sources: *sources
     - os: linux
       dist: trusty
       sudo: false
@@ -22,8 +32,9 @@ matrix:
       addons:
         apt:
           packages:
-            - clang-3.8
             - cmake
+            - g++-5
+            - clang-3.8
           sources: *sources
 script:
   - cmake --version
