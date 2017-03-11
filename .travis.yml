@@ -5,16 +5,14 @@ matrix:
   include:
     - os: osx
       osx_image: xcode7.3 #default
-      before_install: &brew
-      - brew update
-      - brew install hidapi
+#      before_install: &brew
+#      - brew update
+#      - brew install hidapi
     - osx_image: xcode6.4
-      before_install: *brew
     - osx_image: xcode8.2
-      before_install: *brew
     - os: linux
       dist: trusty
-      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5
+      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5 CF=-DCOMPILE_TESTS=ON
       addons:
         apt:
           packages:
@@ -25,7 +23,7 @@ matrix:
             - ubuntu-toolchain-r-test
     - os: linux
       dist: trusty
-      env: COMPILER_NAME=gcc CXX=g++-6 CC=gcc-6
+      env: COMPILER_NAME=gcc CXX=g++-6 CC=gcc-6 CF=-DCOMPILE_TESTS=ON
       addons:
         apt:
           packages:
@@ -35,7 +33,7 @@ matrix:
           sources: *sources
     - os: linux
       dist: trusty
-      env: COMPILER_NAME=clang CXX=clang++-3.8 CC=clang-3.8
+      env: COMPILER_NAME=clang CXX=clang++-3.8 CC=clang-3.8 CF=-DCOMPILE_TESTS=ON
       addons:
         apt:
           packages:
@@ -47,5 +45,5 @@ matrix:
 script:
   - cmake --version
   - ${CXX} --version || true
-  - cmake . -DCOMPILE_TESTS=ON
+  - cmake . ${CF}
   - make -j2
