@@ -38,4 +38,4 @@ script:
   - cmake --version
   - ${CXX} --version || true
   - cmake .
-  - make VERBOSE=1
+  - make -j2
