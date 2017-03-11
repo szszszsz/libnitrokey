@@ -1,10 +1,10 @@
 language: generic
 sudo: false
+os: osx
 
 matrix:
   include:
-    - os: osx
-      osx_image: xcode7.3 #default
+    - osx_image: xcode7.3 #default
 #      before_install: &brew
 #      - brew update
 #      - brew install hidapi
