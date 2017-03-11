@@ -48,7 +48,7 @@ matrix:
 install:
   - mkdir -p build
   - cd build
-  - export CXXFLAGS="${CXX_FLAGS} -Wall -Wextra" # TODO add -Werror
+#  - export CXXFLAGS="${CXX_FLAGS} -Wall -Wextra -Werror" # TODO enable when fixed
   - ${CXX} --version || true
   - cmake --version
   - cmake ..
