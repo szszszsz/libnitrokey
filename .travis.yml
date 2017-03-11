@@ -48,7 +48,7 @@ matrix:
 install:
   - mkdir -p build
   - cd build
-  - export CXXFLAGS="${CXX_FLAGS} -Wall -Wextra -Werror"
+  - export CXXFLAGS="${CXX_FLAGS} -Wall -Wextra" # TODO add -Werror
   - ${CXX} --version || true
   - cmake --version
   - cmake ..
@@ -56,4 +56,4 @@ install:
 script:
   - cmake . ${CF}
   - make -j2
-#  - make test # TBD
+#  - make test # TODO add library device-less tests
