@@ -56,3 +56,4 @@ install:
 script:
   - cmake . ${CF}
   - make -j2
+#  - make test # TBD
