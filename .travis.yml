@@ -46,7 +46,7 @@ matrix:
 
 
 install:
-  - mkdir build
+  - mkdir -p build
   - cd build
   - export CXXFLAGS="${CXX_FLAGS} -Wall -Wextra -Werror"
   - ${CXX} --version || true
